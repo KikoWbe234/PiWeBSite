@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KoljoKompani</title>
+    <style>
+        /* General Body and Background */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e6f7ff, #ffffff); /* Soft blue to white gradient */
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Left and Right Side Backgrounds */
+        .side-left, .side-right {
+            position: fixed;
+            top: 0;
+            width: 15%; /* Adjust as needed */
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1; /* Send behind content */
+        }
+
+        .side-left {
+            left: 0;
+            background-image: url('left-image.jpg'); /* Replace with your left-side image */
+        }
+
+        .side-right {
+            right: 0;
+            background-image: url('right-image.jpg'); /* Replace with your right-side image */
+        }
+
+        /* Main Container */
+        .main-container {
+            width: 70%; /* Adjust width to leave space for side images */
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Section */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #004085; /* Deep blue */
+            color: white;
+            padding: 15px 30px;
+            border-bottom: 3px solid #66b2ff; /* Accent color */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+            width: 100%
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+            transition: transform 0.3s ease;
+
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modern About Us Section */
+        .about-us-section {
+            background: linear-gradient(to right, #f7f7f7, #ffffff);
+            padding: 50px 30px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .about-us-section h2 {
+            font-size: 2.5em;
+            color: #004085;
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .about-us-section p {
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-button {
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* Section containing the image and the paragraph */
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px; /* Adds space between the image and the text */
+            margin-top: 20px;
+        }
+
+        .about-container img {
+            width: 20%; /* Adjust as needed */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-container p {
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6;
+            max-width: 60%; /* Adjust the width of the paragraph */
+        }
+
+        /* Button Style */
+        .next-button, .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .next-button {
+            background-color: #007bff;
+        }
+
+        .next-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            background-color: #d9534f;
+        }
+
+        .back-button:hover {
+            background-color: #c9302c;
+        }
+
+        /* Calculator and Form Sections */
+        .calculator, .form-section {
+            background-color: white;
+            background: linear-gradient(to bottom, #e6f7ff 5%, #ffffff 95%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            border: 2px solid #66b2ff;
+            width: 60%;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transform: scale(0.98);
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .calculator:hover, .form-section:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .calc-input {
+            padding: 10px;
+            width: 150px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .calc-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .calc-button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: #007bff;
+        }
+
+        footer {
+            background-color: #004085;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 40px;
+            border-top: 3px solid #66b2ff;
+        }
+
+        /* Form Section Adjustments */
+        .form-section {
+            background-color: white;
+            background: linear-gradient(to bottom, #e6f7ff 5%, #ffffff 95%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            border: 2px solid #66b2ff;
+            width: 60%;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transform: scale(0.98);
+            display: none; /* Initially hidden */
+            flex-direction: column; /* Ensure vertical layout */
+            align-items: center;
+        }
+
+        .form-section form {
+            width: 100%; /* Ensure the form takes full width */
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Add space between form fields */
+        }
+
+        .form-section input {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 96%; /* Make the input fields fill the available width */
+        }
+
+        .form-section button[type="submit"] {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; /* Make the button fill the available width */
+        }
+
+        .form-section button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
+            .about-container img {
+                width: 23%; /* Намалување на сликите за мобилни уреди */
+                height: auto;
+            }
+
+            /* Останатите промени за мобилни уреди */
+            body {
+                font-size: 12px;
+            }
+
+            .main-container {
+                width: 90%;
+                padding: 10px;
+            }
+
+            .logo img {
+                height: 60px;
+            }
+
+            .about-us-section h2 {
+                font-size: 1.5em;
+            }
+
+            .about-us-section p {
+                font-size: 0,9em;
+            }
+
+            .cta-button {
+                font-size: 1em;
+                padding: 10px 20px;
+            }
+
+            .calc-input, .form-section input {
+                font-size: 1em;
+                padding: 8px;
+                width: 96%;
+            }
+
+            .calc-button, .form-section button[type="submit"] {
+                font-size: 1em;
+                padding: 10px 20px;
+                width: 100%;
+            }
+
+            .next-button, .back-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .side-left, .side-right {
+                display: none;
+            }
+        }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Left and Right Side Backgrounds -->
+<div class="side-left"></div>
+<div class="side-right"></div>
+
+<header>
+    <div class="logo">
+        <img src="Pi-Network.png" alt="Logo"> <!-- Replace with your logo file -->
+    </div>
+</header>
+
+<div class="main-container">
+    <!-- Modern About Us Section -->
+    <section id="aboutSection" class="about-us-section">
+        <h2>About Us</h2>
+        <p>At Pi, we're pioneering the future of decentralized finance by empowering individuals worldwide. With the launch of our open mainnet, users can seamlessly trade Pi for goods and services. Our mission is to ensure your security while navigating the new landscape of digital currency, providing a trusted platform for Pi transactions.</p>
+        <p>Our team is dedicated to guiding you through every step of the process, ensuring that you can make the most out of your Pi assets. Check out our resources and get in touch with us for further assistance on how to spend your Pi coins safely.We prepared a tutorial for you to teach you the steps you need to check to ensure your pi is available</p>
+        <button class="next-button" onclick="showTutorialSection()">Next</button>
+    </section>
+
+    <section id="tutorialSection" style="display: none;">
+        <h2>Tutorial</h2>
+        <p>If you are interested in trading in your Pi for any service, here is a quick tutorial explaining how to do it and understand it!</p> <!-- Previous paragraph -->
+        <div class="about-container">
+            <img src="п2.jpg" alt="Service Image"> <!-- Replace with your image file -->
+            <p>First, you need to open your Pi browser.If all of your mainnet checklists are completed you can directly go to your wallet.</p> <!-- New paragraph -->
+        </div>
+        <div class="about-container">
+            <p>Once you are there you need to open your pi wallet with your pi pass phrase or fingerprint ID.Do not share your pi passphrase with anyone we do not ask you for your passphrase</p> <!-- New paragraph -->
+            <img src="јјј.jpg" alt="Service Image"> <!-- Replace with your image file -->
+        </div>
+        <div class="about-container">
+            <img src="p1.jpg" alt="Service Image"> <!-- Replace with your image file -->
+            <p>When you open your pi wallet you will see a balance number of your total migrated pi, however this does not mean that you can use this pi.Right below the balance number you can see Available Balance:0.28 pi that is the actual pi amount you can transfer to other people.</p> <!-- New paragraph -->
+        </div>
+        <div class="about-container">
+            <p>If you see your balance is x amount and your available balance is 0 that means you have your pi locked up.</p> <!-- New paragraph -->
+            <img src="Р34.jpg" alt="Service Image"> <!-- Replace with your image file -->
+        </div>
+        <div class="about-container">
+            <img src="Kwe.jpg" alt="Service Image"> <!-- Replace with your image file -->
+            <p>Pi automatically locks up a portion of pi every time on preset amounts.You must turn automatic lockup off to prevent your pi from further lock ups.</p> <!-- New paragraph -->
+        </div>
+        <div class="about-container">
+            <p>You can check your locked up pi to see when it is available on the wallet.</p> <!-- New paragraph -->
+            <img src="ASD.jpg" alt="Service Image"> <!-- Replace with your image file -->
+        </div>
+        <div>
+            <p>If you want to contact us and see the value of your pi, click on the next button</p>
+        </div>
+        <button class="next-button" onclick="showHiddenSections()">Next</button>
+        <button class="back-button" onclick="showAboutUs()">Back</button>
+    </section>
+
+    <!-- Pi Calculator and Information Form Section (hidden initially) -->
+    <section class="calculator" id="calculatorSection" style="display: none;">
+        <div>
+            <h3>Pi Calculator</h3>
+            <input class="calc-input" id="piInput" type="number" value="0.50" step="0.01">
+            <button class="calc-button" onclick="calculatePi()">Calculate</button>
+            <p id="result"></p>
+        </div>
+    </section>
+
+    <section class="form-section" id="formSection" style="display: none;">
+        <h2>Leave Your Information</h2>
+        <form action="https://formspree.io/f/mwppnpvy" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="text" name="surname" placeholder="Your Surname" required>
+            <input type="text" name="country" placeholder="Your Country" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <input type="phone" name="phone" placeholder="Your Phone Number"required>
+            <button type="submit">Submit</button>
+        </form>
+        <button class="back-button" onclick="showAboutSection()">Close</button>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; The future is not something you just wait.It's something you create every day with your decisions, actions, and dreams that you follow.</p>
+</footer>
+
+<script>
+    function calculatePi() {
+        let piValue = parseFloat(document.getElementById("piInput").value);
+        let resultInUSD = piValue * 0.50;  // 1 Pi = 0.50 USD
+        let resultInMKD = resultInUSD * 59; // 1 USD = 59 MKD
+        let resultText = `${piValue} Pi is equivalent to ${resultInUSD.toFixed(2)} USD or ${resultInMKD.toFixed(2)} MKD`;
+        document.getElementById("result").innerText = resultText;
+    }
+
+    function showHiddenSections() {
+        // Hide About, Tutorial, and Form sections
+        document.getElementById("aboutSection").style.display = "none";
+        document.getElementById("tutorialSection").style.display = "none";
+
+        // Show Pi Calculator and Form sections
+        document.getElementById("calculatorSection").style.display = "flex";
+        document.getElementById("formSection").style.display = "flex";
+    }
+    function showAboutSection() {
+        document.getElementById("calculatorSection").style.display = "none"; // Hide Pi Calculator
+        document.getElementById("formSection").style.display = "none"; // Hide Leave Your Information
+        document.getElementById("aboutSection").style.display = "block"; // Show About section
+    }
+    function showTutorialSection() {
+        // Скриј ја секцијата "About Us" и прикажи ја "Tutorial"
+        document.getElementById("aboutSection").style.display = "none";
+        document.getElementById("tutorialSection").style.display = "block";
+    }
+
+    function showAboutUs() {
+        // Прикажи ја секцијата "About Us" и скриј ја "Tutorial"
+        document.getElementById("tutorialSection").style.display = "none";
+        document.getElementById("aboutSection").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
